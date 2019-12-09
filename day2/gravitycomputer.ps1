@@ -1,7 +1,7 @@
 $programTemplate=(Get-Content $PSScriptRoot\input).Split(",")
 function runGravityComputer {
     param (
-        [array]$progam
+        [array]$program
     )
     $pos = 0
     [int]$opcode = $program[$pos]
@@ -25,9 +25,13 @@ function runGravityComputer {
 }
 $expectedResult = 19690720
 
-runGravityComputer -progam $programTemplate
-
-# while ($result -ne $expectedResult) {
-    
-#     break
-# }
+for ($x = 0; $x -lt 99; $x++) {
+    for ($y = 0; $y -lt 99; $y++) {
+        $a = $programTemplate.Clone()
+        $a[1]=$x
+        $a[2]=$y
+        if ((runGravityComputer -program $a)[0] -eq $expectedResult){
+            100*$x+$y
+        }
+    }
+}
